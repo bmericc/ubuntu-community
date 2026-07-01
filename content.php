@@ -21,7 +21,13 @@
 			</div>
 		<?php } ?>
 
-		<div class="post-post">
+		<?php if ( has_post_thumbnail() ) { ?>
+				<div class="post-thumbnail">
+					<?php the_post_thumbnail( 'large', array( 'style' => 'width:100%;height:auto;margin-bottom:1.5em;' ) ); ?>
+				</div>
+			<?php } ?>
+
+			<div class="post-post">
 			<div class="post-entry entry"><?php the_content( __( 'Read the rest of this article', 'ubuntu-community' ) ); ?></div>
 		</div>
 
