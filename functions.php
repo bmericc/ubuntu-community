@@ -75,7 +75,7 @@ function ubuntucommunity_scripts( ) {
 	wp_enqueue_style( 'css-reset', get_template_directory_uri( ) . '/css/reset.css' );
 
 	// Main style sheets
-	wp_enqueue_style( 'ubuntucommunity-style-common', get_template_directory_uri( ) . '/css/style-common.css', array( 'css-reset' ) );
+	wp_enqueue_style( 'ubuntucommunity-style-common', get_template_directory_uri( ) . '/css/style-common.css', array( 'css-reset' ), '2.0' );
 	wp_enqueue_style( 'ubuntucommunity-style', get_template_directory_uri( ) . '/css/style.css', array( 'css-reset' ) );
 
 	// Dark variant
