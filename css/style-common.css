@@ -225,44 +225,38 @@ ol {
 }
 
 /* Comments form — full-width layout */
-#reply .comment-form {
-	display: flex;
-	flex-wrap: wrap;
-	gap: 0.5em;
-}
-#reply .comment-form > * {
-	margin: 0 !important;
-	box-sizing: border-box;
-}
-/* Satır 1: Yorum textarea — tam genişlik */
-#reply .comment-form > .comment-form-comment {
-	width: 100%;
-}
-#reply .comment-form > .comment-form-comment textarea,
 #reply #comment {
 	float: none !important;
 	width: 100% !important;
 	box-sizing: border-box;
 }
-/* Satır 2: Ad + E-posta — yan yana %50 */
-#reply .comment-form > .comment-form-author,
-#reply .comment-form > .comment-form-email {
-	flex: 1 1 calc(50% - 0.25em);
-	min-width: 0;
+#reply .comment-meta {
+	float: none !important;
+	width: 100% !important;
 }
-#reply .comment-form > .comment-form-author input,
-#reply .comment-form > .comment-form-email input {
+/* Satır 2: Ad + E-posta — yan yana */
+#reply .comment-form-author,
+#reply .comment-form-email {
+	float: left !important;
+	width: calc(50% - 0.25em) !important;
+	box-sizing: border-box !important;
+	margin: 0 0 0.5em !important;
+}
+#reply .comment-form-author {
+	margin-right: 0.5em !important;
+}
+#reply .comment-form-author input,
+#reply .comment-form-email input {
+	width: 100% !important;
+	box-sizing: border-box !important;
+}
+/* Satır 3+: geri kalan her şey float temizle */
+#reply .comment-form-cookies-consent,
+#reply .form-submit {
+	clear: both !important;
 	width: 100% !important;
 	box-sizing: border-box;
-}
-/* Satır 3: Checkbox — tam genişlik */
-#reply .comment-form > .comment-form-cookies-consent {
-	width: 100%;
-}
-/* Açıklama metni ve submit — tam genişlik */
-#reply .comment-form > .comment-notes,
-#reply .comment-form > .form-submit {
-	width: 100%;
+	margin: 0.5em 0 0 !important;
 }
 
 /* Comments form fixes */
