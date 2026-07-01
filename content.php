@@ -22,8 +22,8 @@
 		<?php } ?>
 
 		<?php if ( has_post_thumbnail() ) { ?>
-				<div class="post-thumbnail">
-					<?php the_post_thumbnail( 'large', array( 'style' => 'width:100%;height:auto;margin-bottom:1.5em;' ) ); ?>
+				<div class="post-thumbnail" style="width:100%;aspect-ratio:1280/854;overflow:hidden;margin-bottom:1.5em;">
+					<?php the_post_thumbnail( 'large', array( 'style' => 'width:100%;height:100%;object-fit:cover;display:block;' ) ); ?>
 				</div>
 			<?php } ?>
 
