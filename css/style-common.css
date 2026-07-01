@@ -224,6 +224,30 @@ ol {
 	}
 }
 
+/* Comments form fixes */
+#reply input[type="submit"] {
+	width: auto !important;
+	float: right !important;
+	padding: 0.6em 1.8em !important;
+	background-color: #e95420 !important;
+	color: #fff !important;
+	font-weight: 500 !important;
+	font-size: 1rem !important;
+	border: none !important;
+	border-radius: 4px !important;
+	cursor: pointer !important;
+	transition: background 0.2s !important;
+	margin-top: 0.5em !important;
+}
+#reply input[type="submit"]:hover {
+	background-color: #c2410c !important;
+}
+#reply .comment-form p.form-submit {
+	clear: both;
+	text-align: right;
+	margin: 0;
+}
+
 .read-more {
 	display: inline-block;
 	margin-top: 0.75em;
