@@ -30,7 +30,6 @@
 				'fields' => array(
 					'author' => '<span class="comment-author"><input id="author" name="author" type="text" size="30" aria-required="true" required="required" placeholder="Ad" /></span><br />',
 					'email'  => '<span class="comment-email"><input id="email" name="email" type="text" value="" size="30" aria-required="true" required="required" placeholder="E-posta" /></span><br />',
-					'cookies' => '',
 				),
 				'submit_label' => 'Yorum Gönder',
 			) );

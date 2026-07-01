@@ -225,6 +225,23 @@ ol {
 }
 
 /* Comments form fixes */
+.comment-form-cookies-consent {
+	display: flex;
+	align-items: flex-start;
+	gap: 0.5em;
+	margin: 0.5em 0 0.75em;
+}
+.comment-form-cookies-consent input[type="checkbox"] {
+	width: auto !important;
+	flex-shrink: 0;
+	margin-top: 3px;
+}
+.comment-form-cookies-consent label {
+	font-size: 0.85rem;
+	line-height: 1.4;
+	color: #555;
+}
+
 #reply input[type="submit"] {
 	width: auto !important;
 	float: right !important;
