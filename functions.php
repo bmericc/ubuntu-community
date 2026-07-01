@@ -466,4 +466,5 @@ function ubuntucommunity_articles_filters( $query ) {
 	}
 }
 
+add_theme_support( 'post-thumbnails' );
 ?>
