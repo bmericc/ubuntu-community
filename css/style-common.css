@@ -223,3 +223,13 @@ ol {
 		display: none;
 	}
 }
+
+.read-more {
+	display: inline-block;
+	margin-top: 0.75em;
+	font-size: 0.9rem;
+	font-weight: 500;
+	color: #e95420;
+	text-decoration: none;
+}
+.read-more:hover { text-decoration: underline; }

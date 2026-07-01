@@ -30,8 +30,15 @@
 			<?php } ?>
 
 			<div class="post-post">
-			<div class="post-entry entry"><?php the_content( __( 'Read the rest of this article', 'ubuntu-community' ) ); ?></div>
-		</div>
+				<div class="post-entry entry">
+					<?php if ( is_singular() ) {
+						the_content();
+					} else {
+						the_excerpt();
+						echo '<a href="' . esc_url( get_permalink() ) . '" class="read-more">' . __( 'Devamını oku →', 'ubuntu-community' ) . '</a>';
+					} ?>
+				</div>
+			</div>
 
 		<?php if( !is_page( ) ) { ?>
 			<div class="post-meta">
