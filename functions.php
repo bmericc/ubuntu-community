@@ -467,4 +467,105 @@ function ubuntucommunity_articles_filters( $query ) {
 }
 
 add_theme_support( 'post-thumbnails' );
+add_image_size( 'uc-slider', 1280, 854, true );
+
+/* -----------------------------------------------------------------------
+ * Slider — Customizer ayarları
+ * ----------------------------------------------------------------------- */
+
+add_action( 'customize_register', 'ubuntucommunity_slider_customize_register' );
+
+function ubuntucommunity_slider_customize_register( $wp_customize ) {
+	$wp_customize->add_section( 'uc_slider_section', array(
+		'title'    => __( 'Ana Sayfa Slider', 'ubuntu-community' ),
+		'priority' => 30,
+	) );
+
+	// Slider aktif/pasif
+	$wp_customize->add_setting( 'uc_slider_enabled', array( 'default' => false ) );
+	$wp_customize->add_control( 'uc_slider_enabled', array(
+		'type'    => 'checkbox',
+		'label'   => __( 'Slider\'ı etkinleştir', 'ubuntu-community' ),
+		'section' => 'uc_slider_section',
+	) );
+
+	// Yazı ID'leri (virgülle ayrılmış)
+	$wp_customize->add_setting( 'uc_slider_post_ids', array(
+		'default'           => '',
+		'sanitize_callback' => 'sanitize_text_field',
+	) );
+	$wp_customize->add_control( 'uc_slider_post_ids', array(
+		'type'        => 'text',
+		'label'       => __( 'Yazı ID\'leri (virgülle ayrılmış)', 'ubuntu-community' ),
+		'description' => __( 'Örnek: 12,34,56 — Öne çıkarılan görseli olan yazıları girin.', 'ubuntu-community' ),
+		'section'     => 'uc_slider_section',
+	) );
+}
+
+/* -----------------------------------------------------------------------
+ * Slider — Script yükle
+ * ----------------------------------------------------------------------- */
+
+add_action( 'wp_enqueue_scripts', 'ubuntucommunity_slider_scripts' );
+
+function ubuntucommunity_slider_scripts() {
+	if ( ! ( is_front_page() || is_home() ) ) return;
+	if ( ! get_theme_mod( 'uc_slider_enabled' ) ) return;
+
+	wp_enqueue_script( 'jquery-cycle', get_template_directory_uri() . '/js/jquery.cycle.all.min.js', array( 'jquery' ), '3.0.3', true );
+	wp_enqueue_script( 'uc-slider', get_template_directory_uri() . '/js/slider-settings.js', array( 'jquery-cycle' ), '1.0', true );
+}
+
+/* -----------------------------------------------------------------------
+ * Slider — HTML çıktısı
+ * ----------------------------------------------------------------------- */
+
+function ubuntucommunity_featured_slider() {
+	if ( ! get_theme_mod( 'uc_slider_enabled' ) ) return;
+
+	$raw_ids = get_theme_mod( 'uc_slider_post_ids', '' );
+	if ( empty( trim( $raw_ids ) ) ) return;
+
+	$post_ids = array_filter( array_map( 'intval', explode( ',', $raw_ids ) ) );
+	if ( empty( $post_ids ) ) return;
+
+	$query = new WP_Query( array(
+		'post_type'           => array( 'post', 'page' ),
+		'post__in'            => $post_ids,
+		'orderby'             => 'post__in',
+		'posts_per_page'      => count( $post_ids ),
+		'ignore_sticky_posts' => 1,
+	) );
+
+	if ( ! $query->have_posts() ) return;
+
+	echo '<section class="uc-featured-slider">';
+	echo '<div class="uc-slider-cycle">';
+
+	$i = 0;
+	while ( $query->have_posts() ) {
+		$query->the_post();
+		$class = $i === 0 ? 'uc-slide uc-slide-visible' : 'uc-slide uc-slide-hidden';
+		echo '<div class="' . esc_attr( $class ) . '">';
+		if ( has_post_thumbnail() ) {
+			echo '<figure><a href="' . esc_url( get_permalink() ) . '">';
+			the_post_thumbnail( 'uc-slider', array( 'style' => 'width:100%;height:auto;display:block;' ) );
+			echo '</a></figure>';
+		}
+		echo '<article class="uc-slide-text">';
+		echo '<div class="uc-slide-title"><a href="' . esc_url( get_permalink() ) . '">' . esc_html( get_the_title() ) . '</a></div>';
+		$excerpt = get_the_excerpt();
+		if ( $excerpt ) {
+			echo '<div class="uc-slide-excerpt">' . esc_html( $excerpt ) . '</div>';
+		}
+		echo '</article>';
+		echo '</div>';
+		$i++;
+	}
+	wp_reset_postdata();
+
+	echo '</div>';
+	echo '<nav id="uc-slider-controllers"></nav>';
+	echo '</section>';
+}
 ?>

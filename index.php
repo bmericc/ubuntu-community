@@ -10,6 +10,8 @@
 		}
 	?>
 
+	<?php if ( ( is_front_page() || is_home() ) && function_exists( 'ubuntucommunity_featured_slider' ) ) { ubuntucommunity_featured_slider(); } ?>
+
 	<div id="main" class="inside group"><div class="pad">
 		<div id="content">
 			<?php
