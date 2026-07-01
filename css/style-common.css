@@ -114,13 +114,14 @@ ol {
 .uc-slide-hidden {
 	display: none;
 }
-.uc-slide figure {
+.uc-slide-wrap {
 	position: relative;
 	margin: 0;
 	padding: 0;
 	line-height: 0;
+	font-size: 0;
 }
-.uc-slide figure img {
+.uc-slide-wrap img {
 	width: 100%;
 	height: auto;
 	display: block;
