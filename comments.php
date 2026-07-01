@@ -28,8 +28,8 @@
 				'comment_notes_before' => '<p class="comment-description">Tüm alanlar zorunludur. E-posta adresiniz yayınlanmayacaktır.</p>',
 				'comment_notes_after' => '<div style="clear: both;"></div>',
 				'fields' => array(
-					'author' => '<span class="comment-author"><input id="author" name="author" type="text" size="30" aria-required="true" required="required" placeholder="Ad" /></span><br />',
-					'email'  => '<span class="comment-email"><input id="email" name="email" type="text" value="" size="30" aria-required="true" required="required" placeholder="E-posta" /></span><br />',
+					'author' => '<p class="comment-form-author"><input id="author" name="author" type="text" aria-required="true" required="required" placeholder="Ad" /></p>',
+					'email'  => '<p class="comment-form-email"><input id="email" name="email" type="text" aria-required="true" required="required" placeholder="E-posta" /></p>',
 				),
 				'submit_label' => 'Yorum Gönder',
 			) );

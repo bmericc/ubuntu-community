@@ -224,6 +224,49 @@ ol {
 	}
 }
 
+/* Comments form — full-width layout */
+#reply .comment-form {
+	display: block;
+}
+#reply #comment {
+	float: none !important;
+	width: 100% !important;
+	box-sizing: border-box;
+}
+#reply .comment-meta {
+	float: none !important;
+	width: 100% !important;
+	display: flex;
+	gap: 0.5em;
+}
+#reply .comment-meta .comment-author,
+#reply .comment-meta .comment-email {
+	flex: 1;
+}
+#reply .comment-meta input {
+	width: 100%;
+}
+.comment-form-author,
+.comment-form-email {
+	margin: 0 !important;
+	padding: 0 !important;
+}
+.comment-form-author input,
+.comment-form-email input {
+	box-sizing: border-box !important;
+	width: 100% !important;
+}
+#reply .comment-form > p.comment-form-author,
+#reply .comment-form > p.comment-form-email {
+	display: inline-block;
+	width: calc(50% - 0.25em);
+	margin: 0 0 0.5em !important;
+	vertical-align: top;
+}
+#reply .comment-form > p.comment-form-author {
+	margin-right: 0.5em !important;
+}
+
 /* Comments form fixes */
 .comment-form-cookies-consent {
 	display: flex;
