@@ -98,6 +98,7 @@ ol {
  * Featured Slider
  * ----------------------------------------------------------------------- */
 .uc-featured-slider {
+	position: relative;
 	width: 100%;
 	overflow: hidden;
 	border-radius: 4px 4px 0 0;
@@ -163,7 +164,7 @@ ol {
 }
 #uc-slider-controllers {
 	position: absolute;
-	bottom: 12px;
+	bottom: 14px;
 	left: 0;
 	right: 0;
 	text-align: center;
@@ -171,6 +172,30 @@ ol {
 	background: none;
 	z-index: 10;
 }
+.uc-slider-prev,
+.uc-slider-next {
+	position: absolute;
+	top: 50%;
+	transform: translateY(-50%);
+	z-index: 10;
+	background: rgba(0,0,0,0.45);
+	color: #fff;
+	border: none;
+	cursor: pointer;
+	width: 44px;
+	height: 44px;
+	border-radius: 50%;
+	font-size: 1.4rem;
+	line-height: 44px;
+	text-align: center;
+	text-decoration: none;
+	display: block;
+	transition: background 0.2s;
+}
+.uc-slider-prev { left: 14px; }
+.uc-slider-next { right: 14px; }
+.uc-slider-prev:hover,
+.uc-slider-next:hover { background: rgba(0,0,0,0.75); color: #fff; }
 #uc-slider-controllers a {
 	display: inline-block;
 	width: 10px;

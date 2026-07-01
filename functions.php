@@ -565,6 +565,8 @@ function ubuntucommunity_featured_slider() {
 	wp_reset_postdata();
 
 	echo '</div>';
+	echo '<a class="uc-slider-prev" id="uc-slider-prev" href="#">&#8249;</a>';
+	echo '<a class="uc-slider-next" id="uc-slider-next" href="#">&#8250;</a>';
 	echo '<nav id="uc-slider-controllers"></nav>';
 	echo '</section>';
 }
