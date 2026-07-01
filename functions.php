@@ -548,17 +548,17 @@ function ubuntucommunity_featured_slider() {
 		$class = $i === 0 ? 'uc-slide uc-slide-visible' : 'uc-slide uc-slide-hidden';
 		echo '<div class="' . esc_attr( $class ) . '">';
 		if ( has_post_thumbnail() ) {
-			echo '<figure><a href="' . esc_url( get_permalink() ) . '">';
+			echo '<figure>';
 			the_post_thumbnail( 'uc-slider', array( 'style' => 'width:100%;height:auto;display:block;' ) );
-			echo '</a></figure>';
+			echo '<figcaption class="uc-slide-text">';
+			echo '<div class="uc-slide-title"><a href="' . esc_url( get_permalink() ) . '">' . esc_html( get_the_title() ) . '</a></div>';
+			$excerpt = get_the_excerpt();
+			if ( $excerpt ) {
+				echo '<div class="uc-slide-excerpt">' . esc_html( $excerpt ) . '</div>';
+			}
+			echo '</figcaption>';
+			echo '</figure>';
 		}
-		echo '<article class="uc-slide-text">';
-		echo '<div class="uc-slide-title"><a href="' . esc_url( get_permalink() ) . '">' . esc_html( get_the_title() ) . '</a></div>';
-		$excerpt = get_the_excerpt();
-		if ( $excerpt ) {
-			echo '<div class="uc-slide-excerpt">' . esc_html( $excerpt ) . '</div>';
-		}
-		echo '</article>';
 		echo '</div>';
 		$i++;
 	}

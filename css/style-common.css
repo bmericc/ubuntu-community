@@ -98,16 +98,15 @@ ol {
  * Featured Slider
  * ----------------------------------------------------------------------- */
 .uc-featured-slider {
-	position: relative;
 	width: 100%;
 	overflow: hidden;
-	background: #000;
+	border-radius: 4px 4px 0 0;
 }
 .uc-featured-slider .uc-slider-cycle {
 	position: relative;
 }
 .uc-slide {
-	position: relative;
+	display: block;
 }
 .uc-slide-visible {
 	display: block;
@@ -116,6 +115,7 @@ ol {
 	display: none;
 }
 .uc-slide figure {
+	position: relative;
 	margin: 0;
 	padding: 0;
 	line-height: 0;
