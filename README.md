@@ -1,77 +1,127 @@
-Ubuntu community teams WordPress theme
-======================================
+# Ubuntu Community WordPress Theme
 
-A simple and beautiful theme inspired by the Ubuntu website and designed for Ubuntu community teams. Features responsive design, support for RTL languages, customization of colors and more.
+Ubuntu topluluğu siteleri için tasarlanmış, sade ve modern bir WordPress teması. Ubuntu'nun resmi tasarım diline sadık kalarak responsive, RTL dil desteği ve kapsamlı özelleştirme seçenekleri sunar.
 
-[Screenshot of the theme](ubuntu-community/screenshot.png?raw=true)
+![Screenshot](screenshot.png)
 
-Setting up
-----------
+---
 
-1. Copy all the files in the repository in a directory called "ubuntu-community" under the wp-content/themes/ directory.
-2. Enable the "Community theme for Ubuntu" theme from Appearance » Themes. If you are running multisite, you will need to network enable the theme first under Network Admin » Themes.
+## Özellikler
 
-### Migrating
+- **Ana Sayfa Slider** — Customizer üzerinden seçilen yazıların öne çıkarılan görselleriyle otomatik kayan slider
+- **Öne Çıkarılan Görsel** — Yazı listelerinde yatay (1280×427), tekil sayfalarda tam boy (1280×854) aspect-ratio ile otomatik kırpma
+- **Türkçe Font Desteği** — Google Fonts üzerinden Ubuntu fontu, `latin-ext` alt kümesiyle Türkçe karakter desteği
+- **Koyu Tema** — Customizer'dan tek tıkla etkinleştirilebilir karanlık görünüm
+- **Renk Özelleştirme** — Başlık arka planı, bağlantı rengi, footer rengi Customizer'dan değiştirilebilir
+- **Özel Sütun Kısayolu** — İçerikte `[cols]...[/cols]` etiketiyle 2–5 sütun düzeni
+- **RTL Dil Desteği** — Arapça, İbranice gibi sağdan sola yazılan diller için tam destek
+- **Widget Alanları** — Bildirim, sağ kenar çubuğu, altbilgi widget alanları
+- **PHP 8.4 Uyumlu**
 
-If you are migrating a site that already has content:
-- Set up the widget areas again; WordPress handles widget area settings per-theme
+---
 
-If you are migrating your site from the [Ubuntu Loco Light theme](https://launchpad.net/ubuntu-community-webthemes/light-wordpress-theme) (later "light theme"):
-- **Navigation menu**
-  - Light theme: Created by adding two menu widgets in the "Menu" and "Submenu" widget areas
-  - This theme: Created by linking a menu with the "Header menu" location (supports subitems directly)
+## Kurulum
 
+1. Bu repoyu `ubuntu-community` adıyla `wp-content/themes/` altına kopyalayın:
+   ```bash
+   git clone git@github.com:bmericc/ubuntu-community.git wp-content/themes/ubuntu-community
+   ```
+2. WordPress yönetici panelinden **Görünüm → Temalar** altında "Ubuntu Community" temasını etkinleştirin.
+3. Çoklu site (multisite) kullanıyorsanız önce **Ağ Yönetimi → Temalar** altında ağ genelinde etkinleştirin.
 
-After setting the theme up
---------------------------
+---
 
-When the theme is set up, you might want to do the following things:
+## Slider Kurulumu
 
-**Create a menu and assign it to the "Header menu" theme location.**  [Appearance » Menus]  
-It's highly recommended to add the front page as the first item for this menu since there is no link to the main page visible by default.
+1. **Görünüm → Özelleştir → Ana Sayfa Slider** bölümüne gidin.
+2. "Slider'ı etkinleştir" kutusunu işaretleyin.
+3. Öne çıkarılan görseli olan yazıların ID'lerini virgülle girin (örn: `12,34,56`).
+4. Kaydedin.
 
-**Select a static page for the front page.**  [Settings » Reading]  
-Note: When you set a static page as the front page, its title will be hidden by default. This is to ensure maximum flexibility to make the front page look as you like. If you want to use a regular title on the front page, simply add a "Heading 1" element with your page name to the beginning of the page.
+Slider 5 saniyelik geçiş süresiyle fade efektiyle çalışır; sol/sağ ok butonları ve alt nokta göstergeleriyle gezinme desteği sunar.
 
+---
 
-Widget areas
-------------
+## İlk Kurulum Sonrası
 
-**Footnote widgets**
-- Suitable for most widget types
-- Creates equally sized columsn for all widgets
-- Menus are laid out vertically
+**Menü oluşturun ve "Header menu" konumuna atayın.**
+[Görünüm → Menüler]
+Ana sayfaya yönlendiren bağlantıyı menünün ilk öğesi olarak eklemeniz önerilir.
 
-**Footer widgets**
-- Suitable for menus and short text blocks
-- Widgets are laid on top of each other
-- Menus are laid out horizontally
+**Statik bir ön sayfa seçin.**
+[Ayarlar → Okuma]
+Statik ön sayfa seçildiğinde sayfa başlığı varsayılan olarak gizlenir; daha fazla esneklik için içeriğe istediğiniz düzeni uygulayabilirsiniz.
 
-**Notifications**
-- Suitable for small excerpts of text
-- Shown at the top of the main content area on every page on the website
+---
 
+## Widget Alanları
 
-Additional features
--------------------
+| Alan | Kullanım |
+|---|---|
+| **Bildirimler** | Ana içerik alanının üstünde, tüm sayfalarda görünen kısa metinler |
+| **Sağ Kenar Çubuğu** | Standart widget türleri; dikey menü desteği |
+| **Altbilgi** | Kısa metin blokları ve yatay menüler |
 
-### Autocolumns for content
-To create columns in content, use the following markup:
+---
+
+## İçerik Sütunları
+
+İçerikte `[cols]` kısayoluyla 2–5 sütunlu düzen oluşturabilirsiniz:
+
 ```
 [cols]
-... Column content ...
+Birinci sütun içeriği
 ///
-... Column content ...
+İkinci sütun içeriği
+///
+Üçüncü sütun içeriği
 [/cols]
 ```
-You can add up to four separators (///) within one [cols] declaration to create as many as five columns. If you wish to change the separator, edit the 'ubuntucommunity_columns_separator' option.
 
-### Menu CSS classes
-In the menu editing page, show CSS Classes from the screen options. After that, you can use the following CSS classes to change the appearance of menu item:  
+Ayırıcıyı değiştirmek için `ubuntucommunity_columns_separator` seçeneğini düzenleyin.
 
-Class    | Effect
--------- | -------------------
-strong   | Makes the text bold
+---
 
-### Customizable colors and header logo
-If you don't want to use the Ubuntu orange in your site, or want to change the logo in the header, use the WordPress Customizer under the Appearance menu.
+## Menü CSS Sınıfları
+
+Menü düzenleme ekranında "Ekran Seçenekleri"nden CSS sınıflarını etkinleştirin:
+
+| Sınıf | Efekt |
+|---|---|
+| `strong` | Metni kalın yapar |
+
+---
+
+## Özelleştirme
+
+**Görünüm → Özelleştir** altında:
+
+- Başlık logosu
+- Başlık arka plan rengi
+- Gezinme bağlantı rengi
+- İçerik bağlantı rengi
+- Altbilgi rengi
+- Yazar bilgisini göster/gizle
+- Başlığı her zaman üstte sabitle (sticky header)
+- Koyu tema
+- Ana sayfa slider ayarları
+
+---
+
+## Geliştirme
+
+```bash
+git clone git@github.com:bmericc/ubuntu-community.git
+```
+
+Değişiklikler `master` dalında geliştirilir. Sunucuya deploy için:
+
+```bash
+git -C /path/to/wp-content/themes/ubuntu-community pull origin master
+```
+
+---
+
+## Lisans
+
+GPL v2 veya üzeri — WordPress tema standartlarına uygun olarak lisanslanmıştır.
