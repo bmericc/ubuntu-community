@@ -83,8 +83,8 @@ function ubuntucommunity_scripts( ) {
 		wp_enqueue_style( 'ubuntucommunity-style-dark', get_template_directory_uri( ) . '/css/style-dark.css', array( 'ubuntucommunity-style' ) );
 	}
 
-	// Font stylesheets
-	wp_enqueue_style( 'font-ubuntu', get_template_directory_uri( ) . '/css/style-font-ubuntu.css' );
+	// Font stylesheets — Ubuntu font with Latin Extended (Türkçe karakter desteği)
+	wp_enqueue_style( 'font-ubuntu', 'https://fonts.googleapis.com/css2?family=Ubuntu:ital,wght@0,300;0,400;0,500;0,700;1,300;1,400;1,500;1,700&subset=latin,latin-ext&display=swap' );
 
 	// Responsive design
 	wp_enqueue_style( 'ubuntucommunity-style-resp-1000', get_template_directory_uri( ) . '/css/style-resp-1000.css', array( 'ubuntucommunity-style' ), null, 'only screen and (max-width:1000px)' );
