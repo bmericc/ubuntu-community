@@ -1,10 +1,9 @@
 jQuery(window).on('load', function () {
-	jQuery('.uc-slider-cycle').cycle({
+	var $slider = jQuery('.uc-slider-cycle');
+	$slider.cycle({
 		fx: 'fade',
 		pager: '#uc-slider-controllers',
 		activePagerClass: 'active',
-		prev: '#uc-slider-prev',
-		next: '#uc-slider-next',
 		timeout: 5000,
 		speed: 800,
 		pause: 1,
@@ -13,5 +12,15 @@ jQuery(window).on('load', function () {
 		containerResize: 0,
 		fit: 1,
 		cleartypeNoBg: true
+	});
+
+	jQuery('#uc-slider-prev').on('click', function (e) {
+		e.preventDefault();
+		$slider.cycle('prev');
+	});
+
+	jQuery('#uc-slider-next').on('click', function (e) {
+		e.preventDefault();
+		$slider.cycle('next');
 	});
 });
