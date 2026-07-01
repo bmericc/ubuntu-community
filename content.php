@@ -21,8 +21,10 @@
 			</div>
 		<?php } ?>
 
-		<?php if ( has_post_thumbnail() ) { ?>
-				<div class="post-thumbnail" style="width:100%;aspect-ratio:1280/854;overflow:hidden;margin-bottom:1.5em;">
+		<?php if ( has_post_thumbnail() ) {
+				$ratio = is_singular() ? '1280/854' : '1280/427';
+			?>
+				<div class="post-thumbnail" style="width:100%;aspect-ratio:<?php echo $ratio; ?>;overflow:hidden;margin-bottom:1.5em;">
 					<?php the_post_thumbnail( 'large', array( 'style' => 'width:100%;height:100%;object-fit:cover;display:block;' ) ); ?>
 				</div>
 			<?php } ?>
