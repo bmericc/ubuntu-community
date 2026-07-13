@@ -489,15 +489,36 @@ function ubuntucommunity_slider_customize_register( $wp_customize ) {
 		'section' => 'uc_slider_section',
 	) );
 
-	// Yazı ID'leri (virgülle ayrılmış)
+	// Otomatik mod: en son yayınlanan yazılardan beslesin
+	$wp_customize->add_setting( 'uc_slider_auto', array( 'default' => true ) );
+	$wp_customize->add_control( 'uc_slider_auto', array(
+		'type'        => 'checkbox',
+		'label'       => __( 'Otomatik: en son yazılardan beslesin', 'ubuntu-community' ),
+		'description' => __( 'İşaretliyse aşağıdaki manuel ID listesi yok sayılır, öne çıkan görseli olan en son yazılar otomatik gösterilir.', 'ubuntu-community' ),
+		'section'     => 'uc_slider_section',
+	) );
+
+	// Otomatik moddaki yazı sayısı
+	$wp_customize->add_setting( 'uc_slider_quantity', array(
+		'default'           => 5,
+		'sanitize_callback' => 'absint',
+	) );
+	$wp_customize->add_control( 'uc_slider_quantity', array(
+		'type'        => 'number',
+		'label'       => __( 'Otomatik modda kaç yazı gösterilsin?', 'ubuntu-community' ),
+		'section'     => 'uc_slider_section',
+		'input_attrs' => array( 'min' => 1, 'max' => 20 ),
+	) );
+
+	// Yazı ID'leri (virgülle ayrılmış) — otomatik mod kapalıyken kullanılır
 	$wp_customize->add_setting( 'uc_slider_post_ids', array(
 		'default'           => '',
 		'sanitize_callback' => 'sanitize_text_field',
 	) );
 	$wp_customize->add_control( 'uc_slider_post_ids', array(
 		'type'        => 'text',
-		'label'       => __( 'Yazı ID\'leri (virgülle ayrılmış)', 'ubuntu-community' ),
-		'description' => __( 'Örnek: 12,34,56 — Öne çıkarılan görseli olan yazıları girin.', 'ubuntu-community' ),
+		'label'       => __( 'Manuel yazı ID\'leri (virgülle ayrılmış)', 'ubuntu-community' ),
+		'description' => __( 'Sadece "Otomatik" kapalıyken kullanılır. Örnek: 12,34,56 — Öne çıkarılan görseli olan yazıları girin.', 'ubuntu-community' ),
 		'section'     => 'uc_slider_section',
 	) );
 }
@@ -523,19 +544,37 @@ function ubuntucommunity_slider_scripts() {
 function ubuntucommunity_featured_slider() {
 	if ( ! get_theme_mod( 'uc_slider_enabled' ) ) return;
 
-	$raw_ids = get_theme_mod( 'uc_slider_post_ids', '' );
-	if ( empty( trim( $raw_ids ) ) ) return;
+	if ( get_theme_mod( 'uc_slider_auto', true ) ) {
+		// Otomatik mod: öne çıkan görseli olan en son yazılar.
+		$quantity = (int) get_theme_mod( 'uc_slider_quantity', 5 );
+		if ( $quantity < 1 ) {
+			$quantity = 5;
+		}
 
-	$post_ids = array_filter( array_map( 'intval', explode( ',', $raw_ids ) ) );
-	if ( empty( $post_ids ) ) return;
+		$query = new WP_Query( array(
+			'post_type'           => 'post',
+			'posts_per_page'      => $quantity,
+			'orderby'             => 'date',
+			'order'               => 'DESC',
+			'ignore_sticky_posts' => 1,
+			'meta_key'            => '_thumbnail_id',
+		) );
+	} else {
+		// Manuel mod: elle girilen yazı ID listesi.
+		$raw_ids = get_theme_mod( 'uc_slider_post_ids', '' );
+		if ( empty( trim( $raw_ids ) ) ) return;
 
-	$query = new WP_Query( array(
-		'post_type'           => array( 'post', 'page' ),
-		'post__in'            => $post_ids,
-		'orderby'             => 'post__in',
-		'posts_per_page'      => count( $post_ids ),
-		'ignore_sticky_posts' => 1,
-	) );
+		$post_ids = array_filter( array_map( 'intval', explode( ',', $raw_ids ) ) );
+		if ( empty( $post_ids ) ) return;
+
+		$query = new WP_Query( array(
+			'post_type'           => array( 'post', 'page' ),
+			'post__in'            => $post_ids,
+			'orderby'             => 'post__in',
+			'posts_per_page'      => count( $post_ids ),
+			'ignore_sticky_posts' => 1,
+		) );
+	}
 
 	if ( ! $query->have_posts() ) return;
 

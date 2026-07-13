@@ -105,6 +105,11 @@ ol {
 }
 .uc-featured-slider .uc-slider-cycle {
 	position: relative;
+	/* jQuery Cycle 'fade' geçişinde slaytları position:absolute yapıp normal
+	 * akıştan çıkarıyor; bu container'a sabit yükseklik verilmezse (.uc-slide-wrap
+	 * ile aynı: 640px) yükseklik 0'a çöküyor ve üstteki overflow:hidden içeriği
+	 * tamamen gizliyor — "slider görünüp hemen kayboluyor" bug'ının kök nedeni buydu. */
+	height: 640px;
 }
 .uc-slide {
 	display: block;
