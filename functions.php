@@ -75,7 +75,13 @@ function ubuntucommunity_scripts( ) {
 	wp_enqueue_style( 'css-reset', get_template_directory_uri( ) . '/css/reset.css' );
 
 	// Main style sheets
-	wp_enqueue_style( 'ubuntucommunity-style-common', get_template_directory_uri( ) . '/css/style-common.css', array( 'css-reset' ), '5.5' );
+	// Not: Cloudflare (bu sitede aktif) statik ?ver= sorgu dizesini yıllarca cache'liyor;
+	// dosya değişse bile aynı ?ver ise edge her zaman eskiyi sunmaya devam ediyor
+	// (bkz. Travelify temasındaki aynı bug). filemtime tabanlı versiyon, her değişiklikte
+	// URL'yi otomatik değiştirip Cloudflare'i cache MISS yapmaya zorluyor.
+	$uc_style_common_path = get_template_directory( ) . '/css/style-common.css';
+	$uc_style_common_ver  = file_exists( $uc_style_common_path ) ? filemtime( $uc_style_common_path ) : '5.5';
+	wp_enqueue_style( 'ubuntucommunity-style-common', get_template_directory_uri( ) . '/css/style-common.css', array( 'css-reset' ), $uc_style_common_ver );
 	wp_enqueue_style( 'ubuntucommunity-style', get_template_directory_uri( ) . '/css/style.css', array( 'css-reset' ) );
 
 	// Dark variant
