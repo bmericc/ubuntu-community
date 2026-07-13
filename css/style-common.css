@@ -175,14 +175,19 @@ ol {
 	text-align: center;
 	padding: 0;
 	background: none;
-	z-index: 10;
+	/* jQuery Cycle 'go()' fonksiyonu her geçişte aktif/gelen slayta artan bir
+	 * inline z-index atıyor (len-i+count — count her autoplay turunda artıyor),
+	 * birkaç geçiş sonra bu sabit z-index'i geçip okları/noktaları slaytın
+	 * arkasına gizliyor (tıklanamaz hale getiriyor). EvoLve/Travelify'deki
+	 * aynı bug için kullanılan 9999 değeri buraya da uygulandı. */
+	z-index: 9999;
 }
 .uc-slider-prev,
 .uc-slider-next {
 	position: absolute;
 	top: 50%;
 	transform: translateY(-50%);
-	z-index: 10;
+	z-index: 9999;
 	background: rgba(0,0,0,0.45);
 	color: #fff;
 	border: none;
