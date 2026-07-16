@@ -584,6 +584,12 @@ function ubuntucommunity_featured_slider() {
 
 	if ( ! $query->have_posts() ) return;
 
+	// Otomatik modda: son N yazıyı çektik, eskiden yeniye sırala
+	if ( get_theme_mod( 'uc_slider_auto', true ) ) {
+		$query->posts = array_reverse( $query->posts );
+		$query->rewind_posts();
+	}
+
 	echo '<section class="uc-featured-slider">';
 	echo '<div class="uc-slider-cycle">';
 

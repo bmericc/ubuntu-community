@@ -25,7 +25,13 @@
 				$ratio = is_singular() ? '1280/854' : '1280/427';
 			?>
 				<div class="post-thumbnail" style="width:100%;aspect-ratio:<?php echo $ratio; ?>;overflow:hidden;margin-bottom:1.5em;">
-					<?php the_post_thumbnail( 'large', array( 'style' => 'width:100%;height:100%;object-fit:cover;display:block;' ) ); ?>
+					<?php if ( ! is_singular() ) : ?>
+						<a href="<?php the_permalink(); ?>">
+							<?php the_post_thumbnail( 'large', array( 'style' => 'width:100%;height:100%;object-fit:cover;display:block;' ) ); ?>
+						</a>
+					<?php else : ?>
+						<?php the_post_thumbnail( 'large', array( 'style' => 'width:100%;height:100%;object-fit:cover;display:block;' ) ); ?>
+					<?php endif; ?>
 				</div>
 			<?php } ?>
 
