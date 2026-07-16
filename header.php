@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en-US" xml:lang="en-US">
 <head>
-	<title><?php wp_title( '&laquo;', true, 'right' ); ?><?php bloginfo( 'name' ); ?></title>
+	<!-- title-tag desteği ile WordPress/Yoast tarafından otomatik eklenir -->
 	<meta charset="<?php bloginfo( 'charset' ); ?>" />
 
 	<meta name="copyright" content="&copy; Pasi Lallinaho and Canonical Ltd." />

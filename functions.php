@@ -473,6 +473,7 @@ function ubuntucommunity_articles_filters( $query ) {
 }
 
 add_theme_support( 'post-thumbnails' );
+add_theme_support( 'title-tag' );
 add_image_size( 'uc-slider', 1280, 854, true );
 
 /* -----------------------------------------------------------------------
