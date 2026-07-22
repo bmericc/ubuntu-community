@@ -648,6 +648,14 @@ function ubuntucommunity_og_logo() {
  * Bu helper AVIF URL'ini orijinal JPEG/PNG URL'e çevirir.
  */
 function ubuntucommunity_social_image_url( int $attachment_id ): ?string {
+    global $post;
+    if ( $post ) {
+        $cm_url = get_post_meta( $post->ID, '_cm_social_image_url', true );
+        if ( $cm_url ) {
+            return $cm_url;
+        }
+    }
+
     $orig = wp_get_original_image_url( $attachment_id );
     if ( $orig && ! preg_match( '/\.avif$/i', $orig ) ) {
         return $orig;
@@ -668,12 +676,13 @@ function ubuntucommunity_social_image_url( int $attachment_id ): ?string {
     return $src ? $src[0] : null;
 }
 
-// Yoast'un og:image URL'ini AVIF'ten koru
+// Yoast'un og:image URL'ini AVIF'ten koru — önce _cm_social_image_url dene
 add_filter( 'wpseo_opengraph_image_url', function( $url ) {
-    if ( preg_match( '/\.avif$/i', $url ) ) {
-        $id = attachment_url_to_postid( $url );
-        if ( $id ) {
-            $url = ubuntucommunity_social_image_url( $id ) ?? $url;
+    global $post;
+    if ( $post ) {
+        $cm_url = get_post_meta( $post->ID, '_cm_social_image_url', true );
+        if ( $cm_url ) {
+            return $cm_url;
         }
     }
     return $url;
