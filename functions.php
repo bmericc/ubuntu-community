@@ -644,12 +644,46 @@ function ubuntucommunity_og_logo() {
 }
 
 /**
- * og:image — Yoast SEO bu sitede og:image üretmiyor (social image ayarı yok).
- * Tekil yazılarda öne çıkan görsel, diğer sayfalarda site icon kullanılır.
+ * X/LinkedIn AVIF sorunu: botlar AVIF formatını desteklemiyor.
+ * Bu helper AVIF URL'ini orijinal JPEG/PNG URL'e çevirir.
+ */
+function ubuntucommunity_social_image_url( int $attachment_id ): ?string {
+    $orig = wp_get_original_image_url( $attachment_id );
+    if ( $orig && ! preg_match( '/\.avif$/i', $orig ) ) {
+        return $orig;
+    }
+
+    $meta = wp_get_attachment_metadata( $attachment_id );
+    if ( ! empty( $meta['sizes'] ) ) {
+        $upload_dir = wp_upload_dir();
+        $base       = trailingslashit( $upload_dir['baseurl'] ) . dirname( $meta['file'] ?? '' ) . '/';
+        foreach ( $meta['sizes'] as $size ) {
+            if ( isset( $size['file'] ) && ! preg_match( '/\.avif$/i', $size['file'] ) ) {
+                return $base . $size['file'];
+            }
+        }
+    }
+
+    $src = wp_get_attachment_image_src( $attachment_id, 'full' );
+    return $src ? $src[0] : null;
+}
+
+// Yoast'un og:image URL'ini AVIF'ten koru
+add_filter( 'wpseo_opengraph_image_url', function( $url ) {
+    if ( preg_match( '/\.avif$/i', $url ) ) {
+        $id = attachment_url_to_postid( $url );
+        if ( $id ) {
+            $url = ubuntucommunity_social_image_url( $id ) ?? $url;
+        }
+    }
+    return $url;
+} );
+
+/**
+ * og:image — Yoast bu sitede og:image üretmiyor. AVIF yerine orijinal JPEG/PNG kullanır.
  */
 add_action( 'wp_head', 'ubuntucommunity_og_image', 5 );
 function ubuntucommunity_og_image() {
-    // Yoast zaten og:image bastıysa tekrar basma
     global $wpseo_og;
     if ( isset( $wpseo_og ) ) {
         return;
@@ -658,9 +692,11 @@ function ubuntucommunity_og_image() {
     $url = $width = $height = null;
 
     if ( is_singular() && has_post_thumbnail() ) {
-        $image = wp_get_attachment_image_src( get_post_thumbnail_id(), 'full' );
+        $thumb_id = get_post_thumbnail_id();
+        $url      = ubuntucommunity_social_image_url( $thumb_id );
+        $image    = wp_get_attachment_image_src( $thumb_id, 'full' );
         if ( $image ) {
-            [ $url, $width, $height ] = $image;
+            [ , $width, $height ] = $image;
         }
     }
 
