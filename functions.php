@@ -643,6 +643,42 @@ function ubuntucommunity_og_logo() {
     }
 }
 
+/**
+ * og:image — Yoast SEO bu sitede og:image üretmiyor (social image ayarı yok).
+ * Tekil yazılarda öne çıkan görsel, diğer sayfalarda site icon kullanılır.
+ */
+add_action( 'wp_head', 'ubuntucommunity_og_image', 5 );
+function ubuntucommunity_og_image() {
+    // Yoast zaten og:image bastıysa tekrar basma
+    global $wpseo_og;
+    if ( isset( $wpseo_og ) ) {
+        return;
+    }
+
+    $url = $width = $height = null;
+
+    if ( is_singular() && has_post_thumbnail() ) {
+        $image = wp_get_attachment_image_src( get_post_thumbnail_id(), 'full' );
+        if ( $image ) {
+            [ $url, $width, $height ] = $image;
+        }
+    }
+
+    if ( ! $url ) {
+        $url = get_site_icon_url( 512 );
+    }
+
+    if ( ! $url ) {
+        return;
+    }
+
+    printf( '<meta property="og:image" content="%s" />' . "\n", esc_url( $url ) );
+    if ( $width )  printf( '<meta property="og:image:width" content="%d" />' . "\n", (int) $width );
+    if ( $height ) printf( '<meta property="og:image:height" content="%d" />' . "\n", (int) $height );
+    printf( '<meta name="twitter:card" content="summary_large_image" />' . "\n" );
+    printf( '<meta name="twitter:image" content="%s" />' . "\n", esc_url( $url ) );
+}
+
 // Emoji script/style'larını kaldır (wp-emoji-release.min.js 404 önlemi)
 add_action( 'init', function () {
 	remove_action( 'wp_head', 'print_emoji_detection_script', 7 );
